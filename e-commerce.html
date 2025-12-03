@@ -1,0 +1,133 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>SunnyShop — Simple E‑commerce</title>
+<style>
+  :root{--bg:#f6f8fb;--card:#ffffff;--accent:#ff6b6b;--muted:#6b7280}
+  *{box-sizing:border-box}
+  body{margin:0;font-family:Inter,Arial,Helvetica,sans-serif;background:var(--bg);color:#111}
+  .wrap{max-width:980px;margin:28px auto;padding:16px}
+  header{display:flex;align-items:center;justify-content:space-between;gap:12px}
+  .logo{font-weight:700;color:var(--accent);font-size:22px}
+  nav a{margin-left:12px;color:var(--muted);text-decoration:none;font-size:14px}
+  .grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:16px}
+  .prod{background:var(--card);padding:12px;border-radius:10px;box-shadow:0 6px 18px rgba(17,17,17,0.05)}
+  .prod img{width:100%;height:140px;object-fit:cover;border-radius:8px}
+  .prod h3{margin:8px 0 4px;font-size:16px}
+  .price{color:var(--accent);font-weight:700}
+  .btn{display:inline-block;margin-top:8px;padding:8px 10px;border-radius:8px;border:none;background:var(--accent);color:#fff;text-decoration:none;font-weight:600}
+
+  /* checkbox-cart hack */
+  input[type=checkbox]{display:none}
+  .cart{background:var(--card);padding:14px;border-radius:10px;margin-top:16px}
+  .cart h2{margin:0 0 8px}
+  .cart .empty{color:var(--muted)}
+  .cart .item{display:none;padding:8px 0;border-bottom:1px dashed #eee}
+  /* show item when corresponding checkbox is checked */
+  #p1:checked ~ .cart .item1,
+  #p2:checked ~ .cart .item2,
+  #p3:checked ~ .cart .item3 {display:block}
+
+  .cart .total{margin-top:10px;font-weight:700}
+  .checkout{display:flex;gap:10px;flex-wrap:wrap;margin-top:10px}
+  .checkout label{background:#fff;padding:8px 10px;border-radius:8px;border:1px solid #eee;cursor:pointer}
+  /* Show thank-you when confirm checkbox checked */
+  #confirm:checked ~ .thanks{display:block}
+  .thanks{display:none;margin-top:12px;padding:10px;background:#f0fff6;border-left:4px solid #16a34a;border-radius:6px}
+
+  /* responsive */
+  @media(max-width:880px){.grid{grid-template-columns:repeat(2,1fr)}}
+  @media(max-width:520px){.grid{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+  <div class="wrap">
+    <header>
+      <div class="logo">SunnyShop</div>
+      <nav>
+        <a href="#products">Products</a>
+        <a href="#cart">Cart</a>
+        <a href="#checkout">Checkout</a>
+      </nav>
+    </header>
+
+    <!-- PRODUCT LIST + hidden checkboxes (cart toggles) -->
+    <section id="products">
+      <h2>Products</h2>
+      <!-- hidden inputs must come BEFORE the cart block to control it via CSS siblings -->
+      <input type="checkbox" id="p1">
+      <input type="checkbox" id="p2">
+      <input type="checkbox" id="p3">
+
+      <div class="grid">
+        <article class="prod">
+          <img src="tshirt.jpg" alt="Graphic Tee">
+          <h3>Graphic Tee</h3>
+          <div class="price">₹799</div>
+          <label for="p1" class="btn">Add / Remove</label>
+        </article>
+
+        <article class="prod">
+          <img src="headphones.webp" alt="Headphones">
+          <h3>Wireless Headphones</h3>
+          <div class="price">₹2,499</div>
+          <label for="p2" class="btn">Add / Remove</label>
+        </article>
+
+        <article class="prod">
+          <img src="https://images.unsplash.com/photo-1542291026-7eec264c27ff?q=80&w=800&auto=format&fit=crop" alt="Handmade Mug">
+          <h3>Handmade Mug</h3>
+          <div class="price">₹499</div>
+          <label for="p3" class="btn">Add / Remove</label>
+        </article>
+      </div>
+    </section>
+
+    <!-- CART (reads checkbox states) -->
+    <section class="cart" id="cart">
+      <h2>Your Cart</h2>
+      <p class="empty">Select "Add" on products to show them here.</p>
+
+      <div class="item item1">
+        Graphic Tee — ₹799
+      </div>
+      <div class="item item2">
+        Wireless Headphones — ₹2,499
+      </div>
+      <div class="item item3">
+        Handmade Mug — ₹499
+      </div>
+
+      <div class="total">Total: (toggle items to see)</div>
+
+      <div class="checkout">
+        <a href="#checkout" class="btn">Proceed to Checkout</a>
+      </div>
+    </section>
+
+    <!-- SIMPLE CHECKOUT (form is static) -->
+    <section id="checkout" style="margin-top:16px">
+      <div class="cart">
+        <h2>Checkout</h2>
+        <form action="#" method="post">
+          <input type="text" name="name" placeholder="Full name" required style="padding:8px;border-radius:6px;border:1px solid #eee;width:100%;margin-bottom:8px">
+          <input type="email" name="email" placeholder="Email" style="padding:8px;border-radius:6px;border:1px solid #eee;width:100%;margin-bottom:8px">
+          <input type="text" name="address" placeholder="Shipping address" style="padding:8px;border-radius:6px;border:1px solid #eee;width:100%;margin-bottom:8px">
+          <label style="display:block;margin-top:8px">Payment method</label>
+          <select style="padding:8px;border-radius:6px;border:1px solid #eee;width:100%"><option>Pay on Delivery</option><option>Card (mock)</option></select>
+
+          <div style="margin-top:10px">
+            <input type="checkbox" id="confirm">
+            <label for="confirm" style="margin-left:6px;cursor:pointer">I confirm & place order</label>
+          </div>
+        </form>
+        <div class="thanks">✅ Thank you! Your order is placed (this is a static demo).</div>
+      </div>
+    </section>
+
+    <footer style="margin-top:18px;text-align:center;color:var(--muted)">© 2025 SunnyShop</footer>
+  </div>
+</body>
+</html>
